@@ -9,3 +9,7 @@ Asisten: ya
 ## Profil pengguna
 Pengguna: Nama saya Dinda, umur 27 tahun, tinggal di Bandung, dan suka membaca serta bersepeda.
 Asisten: {"nama":"Dinda","usia":27,"kota":"Bandung","minat":["membaca","bersepeda"]}
+
+## Laporan kepolisian
+Pengguna: Saya Rina, nomor telepon 081234567890. Ponsel saya dicuri pada 20 Juli 2026 sekitar pukul 19.30 di area parkir Pasar Baru, Jakarta. Saya tidak melihat pelakunya. Pak Dedi, petugas parkir, melihat seseorang membawa ponsel saya. Bukti yang saya miliki adalah rekaman CCTV dan nota pembelian ponsel. Situasi saat ini sudah aman.
+Asisten: {"nama_pelapor":"Rina","kontak_pelapor":"081234567890","jenis_laporan":"pencurian","waktu_kejadian":"20 Juli 2026 pukul 19.30","lokasi_kejadian":"Area parkir Pasar Baru, Jakarta","uraian":"Ponsel pelapor dicuri di area parkir","terlapor":"","saksi":["Pak Dedi, petugas parkir"],"barang_bukti":["rekaman CCTV","nota pembelian ponsel"],"tindakan_segera":false}

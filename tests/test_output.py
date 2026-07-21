@@ -30,3 +30,38 @@ def test_user_profile_shape() -> None:
     assert 0 <= profile["usia"] <= 150
     assert isinstance(profile["kota"], str)
     assert all(isinstance(item, str) for item in profile["minat"])
+
+
+def test_police_report_shape() -> None:
+    output = (
+        '{"nama_pelapor":"Rina","kontak_pelapor":"081234567890",'
+        '"jenis_laporan":"pencurian","waktu_kejadian":"20 Juli 2026 pukul 19.30",'
+        '"lokasi_kejadian":"Area parkir Pasar Baru, Jakarta",'
+        '"uraian":"Ponsel pelapor dicuri","terlapor":"",'
+        '"saksi":["Pak Dedi"],"barang_bukti":["rekaman CCTV","nota pembelian"],'
+        '"tindakan_segera":false}'
+    )
+    report = json.loads(output)
+    assert list(report) == [
+        "nama_pelapor",
+        "kontak_pelapor",
+        "jenis_laporan",
+        "waktu_kejadian",
+        "lokasi_kejadian",
+        "uraian",
+        "terlapor",
+        "saksi",
+        "barang_bukti",
+        "tindakan_segera",
+    ]
+    assert report["jenis_laporan"] in {
+        "kehilangan",
+        "pencurian",
+        "penipuan",
+        "kekerasan",
+        "gangguan_kamtibmas",
+        "lainnya",
+    }
+    assert all(isinstance(item, str) for item in report["saksi"])
+    assert all(isinstance(item, str) for item in report["barang_bukti"])
+    assert isinstance(report["tindakan_segera"], bool)

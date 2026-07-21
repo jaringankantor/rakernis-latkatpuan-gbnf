@@ -1,0 +1,7 @@
+root ::= "{" ws "\"nama_pelapor\"" ws ":" ws string ws "," ws "\"kontak_pelapor\"" ws ":" ws string ws "," ws "\"jenis_laporan\"" ws ":" ws report-type ws "," ws "\"waktu_kejadian\"" ws ":" ws string ws "," ws "\"lokasi_kejadian\"" ws ":" ws string ws "," ws "\"uraian\"" ws ":" ws string ws "," ws "\"terlapor\"" ws ":" ws string ws "," ws "\"saksi\"" ws ":" ws array ws "," ws "\"barang_bukti\"" ws ":" ws array ws "," ws "\"tindakan_segera\"" ws ":" ws boolean ws "}"
+report-type ::= "\"kehilangan\"" | "\"pencurian\"" | "\"penipuan\"" | "\"kekerasan\"" | "\"gangguan_kamtibmas\"" | "\"lainnya\""
+array ::= "[" ws (string (ws "," ws string)*)? ws "]"
+string ::= "\"" char* "\""
+char ::= [^"\\\x7F\x00-\x1F] | "\\" (["\\/bfnrt] | "u" [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])
+boolean ::= "true" | "false"
+ws ::= [ \t\n\r]*

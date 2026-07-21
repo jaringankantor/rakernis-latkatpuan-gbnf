@@ -46,7 +46,42 @@ result = model.generate(
 print(result)
 ```
 
-## 4. Menambah grammar
+## 4. Jalankan skrip contoh
+
+Skrip pada direktori `examples/` dapat dijalankan langsung dari root proyek.
+
+Menghasilkan JSON terstruktur:
+
+```bash
+python examples/simple_json.py --model-path models/sahabatai.gguf
+```
+
+Menghasilkan jawaban `ya` atau `tidak`:
+
+```bash
+python examples/yes_no.py --model-path models/sahabatai.gguf
+```
+
+Menghasilkan profil pengguna dengan field `nama`, `usia`, `kota`, dan `minat`:
+
+```bash
+python examples/user_profile.py --model-path models/sahabatai.gguf
+```
+
+Menghasilkan laporan masyarakat untuk kepolisian:
+
+```bash
+python examples/laporan_kepolisian.py --model-path models/sahabatai.gguf
+```
+
+Grammar `laporan-kepolisian` menghasilkan JSON berisi identitas dan kontak pelapor,
+jenis laporan, waktu dan lokasi kejadian, uraian, terlapor, saksi, barang bukti,
+serta penanda `tindakan_segera`. Gunakan string atau array kosong untuk informasi
+yang tidak diberikan dan jangan menambahkan informasi hasil asumsi.
+
+Sesuaikan nilai `--model-path` dengan lokasi file model GGUF Anda.
+
+## 5. Menambah grammar
 
 Tambahkan file `.gbnf` ke folder `grammars/`. Setiap grammar wajib memiliki rule `root`:
 
@@ -56,7 +91,7 @@ root ::= "pilihan-a" | "pilihan-b"
 
 Nama file otomatis muncul sebagai pilihan pada CLI. Grammar membatasi bentuk sintaksis, bukan menjamin kebenaran isi; system prompt tetap diperlukan agar respons relevan.
 
-## 5. Jalankan tes
+## 6. Jalankan tes
 
 ```bash
 pytest -q

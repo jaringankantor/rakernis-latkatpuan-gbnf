@@ -26,7 +26,43 @@ pip install -r requirements.txt
 python -m src.main --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf --grammar json --prompt "Pengguna bernama Anwar dan tinggal di Jakarta. Keluarkan objek JSON dengan field nama dan kota."
 ```
 
-Grammar yang tersedia: `json`, `yes-no`, dan `user-profile`. Jalankan `python -m src.main --help` untuk opsi lengkap.
+Grammar yang tersedia: `json`, `yes-no`, `user-profile`, dan `laporan-kepolisian`. Jalankan `python -m src.main --help` untuk opsi lengkap.
+
+## Menjalankan examples
+
+Jalankan skrip contoh dari root proyek setelah virtual environment aktif.
+
+Contoh menghasilkan JSON terstruktur:
+
+```bash
+python examples/simple_json.py \
+  --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf
+```
+
+Contoh menghasilkan jawaban `ya` atau `tidak`:
+
+```bash
+python examples/yes_no.py \
+  --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf
+```
+
+Contoh menghasilkan profil pengguna terstruktur:
+
+```bash
+python examples/user_profile.py \
+  --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf
+```
+
+Contoh menghasilkan laporan masyarakat untuk kepolisian:
+
+```bash
+python examples/laporan_kepolisian.py \
+  --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf
+```
+
+Gunakan lokasi file GGUF yang sesuai apabila model disimpan di direktori lain.
+
+## Menjalankan tes
 
 ```bash
 pytest
