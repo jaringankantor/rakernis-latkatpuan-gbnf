@@ -1,0 +1,11 @@
+## JSON
+Pengguna: Buat data satu produk bernama Kopi Gayo dengan harga 75000.
+Asisten: {"nama":"Kopi Gayo","harga":75000}
+
+## Ya/Tidak
+Pengguna: Apakah Jakarta berada di Indonesia? Jawab ya atau tidak.
+Asisten: ya
+
+## Profil pengguna
+Pengguna: Nama saya Dinda, umur 27 tahun, tinggal di Bandung, dan suka membaca serta bersepeda.
+Asisten: {"nama":"Dinda","usia":27,"kota":"Bandung","minat":["membaca","bersepeda"]}

@@ -1,0 +1,6 @@
+root ::= "{" ws "\"nama\"" ws ":" ws string ws "," ws "\"usia\"" ws ":" ws age ws "," ws "\"kota\"" ws ":" ws string ws "," ws "\"minat\"" ws ":" ws array ws "}"
+array ::= "[" ws (string (ws "," ws string)*)? ws "]"
+string ::= "\"" char* "\""
+char ::= [^"\\\x7F\x00-\x1F] | "\\" (["\\/bfnrt] | "u" [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])
+age ::= "0" | [1-9] [0-9]? | "1" [0-4] [0-9] | "150"
+ws ::= [ \t\n\r]*
