@@ -16,3 +16,56 @@ Asisten: {"nama_pelapor":"Rina","kontak_pelapor":"081234567890","jenis_laporan":
 
 Contoh lain Laporan kepolisian:
 Saya Andi nomor telepon 081298765432. Saat ini ada seorang pria tidak dikenal yang mencoba mendobrak pintu rumah saya di Jalan Melati Nomor 15, Jakarta Selatan. Kejadian mulai sekitar pukul 02.10 pada 22 Juli 2026. Pria tersebut membawa benda yang menyerupai linggis dan masih berada di depan rumah. Saya bersama istri dan anak sedang mengunci diri di kamar. Tetangga saya, Ibu Sari, juga melihat pelaku dari rumahnya. Rekaman kamera keamanan tersedia. Mohon petugas segera datang karena kami merasa terancam.
+
+## Analisis log jaringan
+
+### Interface putus-nyambung dan MAC flapping
+Pengguna: Analisis log berikut:
+Sumber: core-switch-01
+2026-07-23T08:14:02+07:00 %LINK-3-UPDOWN: Interface GigabitEthernet1/0/24, changed state to down
+2026-07-23T08:14:10+07:00 %SW_MATM-4-MACFLAP_NOTIF: Host 00aa.11bb.22cc in vlan 120 is flapping between port Gi1/0/23 and port Gi1/0/24
+2026-07-23T08:14:16+07:00 %LINK-3-UPDOWN: Interface GigabitEthernet1/0/24, changed state to up
+2026-07-23T08:14:21+07:00 %SW_MATM-4-MACFLAP_NOTIF: Host 00aa.11bb.22cc in vlan 120 is flapping between port Gi1/0/23 and port Gi1/0/24
+Asisten: {"sumber_log":"core-switch-01","jenis_perangkat":"perangkat_jaringan","waktu_kejadian":"23 Juli 2026 pukul 08.14 WIB","tingkat_keparahan":"kritis","status":"insiden_aktif","masalah_terdeteksi":"Interface Gi1/0/24 putus-nyambung dan terjadi MAC flapping pada VLAN 120; terdapat indikasi loop atau jalur redundan yang tidak terkontrol","bukti_log":["Interface Gi1/0/24 berubah menjadi down lalu up","MAC 00aa.11bb.22cc berpindah antara Gi1/0/23 dan Gi1/0/24 lebih dari sekali"],"dampak":"Konektivitas VLAN 120 berpotensi tidak stabil dan dapat memengaruhi perangkat lain","perlu_tindak_lanjut":true,"urgensi":"segera","rekomendasi":["Periksa kabel dan perangkat pada Gi1/0/23 serta Gi1/0/24","Periksa status spanning-tree dan kemungkinan loop pada VLAN 120","Isolasi salah satu port jika gangguan meluas sesuai prosedur operasi"],"informasi_tambahan_dibutuhkan":["Topologi jaringan VLAN 120","Status spanning-tree Gi1/0/23 dan Gi1/0/24","Jumlah kejadian MAC flapping setelah pukul 08.14"]}
+
+### Kegagalan login berulang pada firewall
+Pengguna: Analisis log berikut:
+Sumber: edge-firewall-01
+2026-07-23T09:01:10+07:00 AUTH: Failed admin login for user admin from 203.0.113.17
+2026-07-23T09:01:14+07:00 AUTH: Failed admin login for user admin from 203.0.113.17
+2026-07-23T09:01:19+07:00 AUTH: Failed admin login for user admin from 203.0.113.17
+2026-07-23T09:01:25+07:00 AUTH: Account admin temporarily locked after 5 failed attempts
+Asisten: {"sumber_log":"edge-firewall-01","jenis_perangkat":"perangkat_jaringan","waktu_kejadian":"23 Juli 2026 pukul 09.01 WIB","tingkat_keparahan":"kritis","status":"insiden_aktif","masalah_terdeteksi":"Percobaan login administrator berulang dari alamat IP eksternal menyebabkan akun admin terkunci","bukti_log":["Login user admin dari 203.0.113.17 gagal berulang kali","Akun admin dikunci setelah lima percobaan gagal"],"dampak":"Terdapat risiko percobaan akses tidak sah dan administrator dapat terhambat mengelola firewall","perlu_tindak_lanjut":true,"urgensi":"segera","rekomendasi":["Verifikasi apakah alamat IP sumber dikenal dan diizinkan","Batasi akses antarmuka administrasi menggunakan allowlist atau VPN","Periksa keberhasilan login dan perubahan konfigurasi sebelum serta sesudah kejadian","Ikuti prosedur respons insiden jika sumber tidak dikenal"],"informasi_tambahan_dibutuhkan":["Daftar alamat IP administrator yang sah","Log login berhasil pada rentang waktu terkait","Log perubahan konfigurasi firewall"]}
+
+### Interface pulih setelah gangguan singkat
+Pengguna: Analisis log berikut:
+Sumber: access-switch-07
+2026-07-23T10:05:01+07:00 %LINK-3-UPDOWN: Interface GigabitEthernet1/0/8, changed state to down
+2026-07-23T10:05:04+07:00 %LINK-3-UPDOWN: Interface GigabitEthernet1/0/8, changed state to up
+2026-07-23T10:05:05+07:00 %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet1/0/8, changed state to up
+Asisten: {"sumber_log":"access-switch-07","jenis_perangkat":"perangkat_jaringan","waktu_kejadian":"23 Juli 2026 pukul 10.05 WIB","tingkat_keparahan":"peringatan","status":"perlu_dipantau","masalah_terdeteksi":"Interface Gi1/0/8 sempat terputus selama beberapa detik dan telah kembali aktif","bukti_log":["Interface Gi1/0/8 berubah menjadi down pada 10.05.01","Interface dan line protocol kembali up paling lambat pada 10.05.05"],"dampak":"Perangkat pada port tersebut kemungkinan mengalami gangguan koneksi singkat","perlu_tindak_lanjut":true,"urgensi":"terjadwal","rekomendasi":["Pantau apakah link kembali terputus","Periksa kabel, konektor, dan error counter port saat jadwal pemeliharaan"],"informasi_tambahan_dibutuhkan":["Jumlah kejadian link flap sebelumnya","Nilai CRC error dan interface counter","Perangkat yang terhubung ke Gi1/0/8"]}
+
+## Analisis log server
+
+### Ruang disk hampir penuh
+Pengguna: Analisis log berikut:
+Sumber: app-server-02
+Jul 23 11:20:01 app-server-02 monitoring[842]: WARNING filesystem /var usage 91%, free 8.7G
+Jul 23 11:25:01 app-server-02 monitoring[842]: WARNING filesystem /var usage 92%, free 7.5G
+Asisten: {"sumber_log":"app-server-02","jenis_perangkat":"server","waktu_kejadian":"23 Juli pukul 11.20-11.25","tingkat_keparahan":"peringatan","status":"perlu_tindak_lanjut","masalah_terdeteksi":"Penggunaan filesystem /var meningkat dari 91 persen menjadi 92 persen","bukti_log":["Penggunaan /var mencapai 91 persen dengan ruang bebas 8,7 GB","Lima menit kemudian penggunaan /var mencapai 92 persen dengan ruang bebas 7,5 GB"],"dampak":"Layanan dapat gagal menulis log atau data jika filesystem menjadi penuh","perlu_tindak_lanjut":true,"urgensi":"terjadwal","rekomendasi":["Identifikasi direktori atau file yang tumbuh paling cepat","Periksa kebijakan rotasi log dan retensi data","Bersihkan atau tambah kapasitas menggunakan prosedur yang disetujui"],"informasi_tambahan_dibutuhkan":["Tahun kejadian","Tren penggunaan disk sebelumnya","Daftar penggunaan ruang per direktori di /var","Kebijakan retensi log"]}
+
+### Proses dihentikan karena kehabisan memori
+Pengguna: Analisis log berikut:
+Sumber: api-server-03
+Jul 23 12:41:08 api-server-03 kernel: Out of memory: Killed process 1842 (java) total-vm:8388608kB, anon-rss:6120448kB
+Jul 23 12:41:10 api-server-03 systemd[1]: payment-api.service: Main process exited, code=killed, status=9/KILL
+Jul 23 12:41:10 api-server-03 systemd[1]: payment-api.service: Failed with result 'signal'.
+Asisten: {"sumber_log":"api-server-03","jenis_perangkat":"server","waktu_kejadian":"23 Juli pukul 12.41","tingkat_keparahan":"kritis","status":"insiden_aktif","masalah_terdeteksi":"Kernel menghentikan proses Java karena kehabisan memori sehingga payment-api.service gagal","bukti_log":["Kernel mencatat Out of memory dan menghentikan proses java PID 1842","payment-api.service keluar dengan status SIGKILL dan berstatus failed"],"dampak":"Layanan payment API tidak tersedia atau mengalami gangguan","perlu_tindak_lanjut":true,"urgensi":"segera","rekomendasi":["Periksa status dan kesehatan payment-api.service","Periksa penggunaan memori serta proses dengan konsumsi terbesar","Pulihkan layanan sesuai prosedur dan pastikan dependensinya sehat","Tinjau batas memori, heap Java, dan kemungkinan kebocoran memori"],"informasi_tambahan_dibutuhkan":["Tahun kejadian","Status layanan setelah kegagalan","Grafik penggunaan memori sebelum kejadian","Log aplikasi payment API","Kapasitas RAM dan swap server"]}
+
+### Percobaan SSH gagal dari internet
+Pengguna: Analisis log berikut:
+Sumber: web-server-01
+Jul 23 13:03:41 web-server-01 sshd[2218]: Failed password for invalid user test from 198.51.100.24 port 51220 ssh2
+Jul 23 13:03:43 web-server-01 sshd[2220]: Failed password for root from 198.51.100.24 port 51224 ssh2
+Jul 23 13:03:46 web-server-01 sshd[2222]: Failed password for root from 198.51.100.24 port 51231 ssh2
+Asisten: {"sumber_log":"web-server-01","jenis_perangkat":"server","waktu_kejadian":"23 Juli pukul 13.03","tingkat_keparahan":"peringatan","status":"perlu_dipantau","masalah_terdeteksi":"Terdapat percobaan autentikasi SSH gagal untuk user tidak valid dan root dari satu alamat IP eksternal","bukti_log":["Login SSH user test dari 198.51.100.24 gagal","Dua login SSH root dari alamat IP yang sama gagal dalam beberapa detik"],"dampak":"Belum terlihat akses berhasil, tetapi pola ini dapat merupakan pemindaian atau percobaan brute force","perlu_tindak_lanjut":true,"urgensi":"terjadwal","rekomendasi":["Periksa apakah terdapat login berhasil dari sumber yang sama","Nonaktifkan login SSH langsung sebagai root dan autentikasi kata sandi bila sesuai kebijakan","Batasi akses SSH dengan firewall, VPN, atau allowlist","Pantau peningkatan frekuensi percobaan"],"informasi_tambahan_dibutuhkan":["Tahun kejadian","Log autentikasi sebelum dan sesudah rentang waktu ini","Konfigurasi SSH dan aturan firewall","Jumlah percobaan dari alamat IP sumber"]}

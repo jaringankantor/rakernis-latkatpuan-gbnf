@@ -7,6 +7,7 @@ Proyek contoh untuk membatasi keluaran LLM SahabatAI menggunakan **GBNF (Grammar
 - Grammar JSON generik
 - Jawaban tegas `ya` atau `tidak`
 - Profil pengguna terstruktur
+- Analisis log perangkat jaringan atau server
 - CLI dan contoh penggunaan Python
 - Validasi grammar dan keluaran melalui `pytest`
 
@@ -26,7 +27,7 @@ pip install -r requirements.txt
 python -m src.main --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf --grammar json --prompt "Pengguna bernama Anwar dan tinggal di Jakarta. Keluarkan objek JSON dengan field nama dan kota."
 ```
 
-Grammar yang tersedia: `json`, `yes-no`, `user-profile`, dan `laporan-kepolisian`. Jalankan `python -m src.main --help` untuk opsi lengkap.
+Grammar yang tersedia: `json`, `yes-no`, `user-profile`, `laporan-kepolisian`, dan `analisis-log`. Jalankan `python -m src.main --help` untuk opsi lengkap.
 
 ## Menjalankan examples
 
@@ -57,6 +58,13 @@ Contoh menghasilkan laporan masyarakat untuk kepolisian:
 
 ```bash
 python examples/laporan_kepolisian.py \
+  --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf
+```
+
+Contoh menganalisis log perangkat jaringan atau server:
+
+```bash
+python examples/analisis_log.py \
   --model-path ../models/SahabatAI/gemma2-9b-cpt-sahabatai-v1-instruct.Q4_K_M.gguf
 ```
 

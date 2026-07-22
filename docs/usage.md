@@ -79,6 +79,20 @@ jenis laporan, waktu dan lokasi kejadian, uraian, terlapor, saksi, barang bukti,
 serta penanda `tindakan_segera`. Gunakan string atau array kosong untuk informasi
 yang tidak diberikan dan jangan menambahkan informasi hasil asumsi.
 
+Menganalisis log perangkat jaringan atau server:
+
+```bash
+python examples/analisis_log.py --model-path models/sahabatai.gguf
+```
+
+Grammar `analisis-log` menghasilkan diagnosis terstruktur berisi sumber dan jenis
+perangkat, waktu kejadian, tingkat keparahan, status, masalah yang terdeteksi,
+bukti log, dampak, keputusan perlu tidaknya tindak lanjut, urgensi, rekomendasi,
+dan informasi tambahan yang masih dibutuhkan. Nilai `urgensi` membedakan kondisi
+yang tidak perlu ditindaklanjuti, dapat dijadwalkan, atau harus segera ditangani.
+Grammar menjamin bentuk keluaran, sedangkan keputusan operasional tetap perlu
+divalidasi oleh petugas yang berwenang.
+
 Sesuaikan nilai `--model-path` dengan lokasi file model GGUF Anda.
 
 ## 5. Menambah grammar

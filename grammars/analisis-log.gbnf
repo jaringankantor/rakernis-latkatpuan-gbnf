@@ -1,0 +1,10 @@
+root ::= "{" ws "\"sumber_log\"" ws ":" ws string ws "," ws "\"jenis_perangkat\"" ws ":" ws device-type ws "," ws "\"waktu_kejadian\"" ws ":" ws string ws "," ws "\"tingkat_keparahan\"" ws ":" ws severity ws "," ws "\"status\"" ws ":" ws status ws "," ws "\"masalah_terdeteksi\"" ws ":" ws string ws "," ws "\"bukti_log\"" ws ":" ws array ws "," ws "\"dampak\"" ws ":" ws string ws "," ws "\"perlu_tindak_lanjut\"" ws ":" ws boolean ws "," ws "\"urgensi\"" ws ":" ws urgency ws "," ws "\"rekomendasi\"" ws ":" ws array ws "," ws "\"informasi_tambahan_dibutuhkan\"" ws ":" ws array ws "}"
+device-type ::= "\"perangkat_jaringan\"" | "\"server\"" | "\"tidak_diketahui\""
+severity ::= "\"info\"" | "\"peringatan\"" | "\"kritis\""
+status ::= "\"normal\"" | "\"perlu_dipantau\"" | "\"perlu_tindak_lanjut\"" | "\"insiden_aktif\""
+urgency ::= "\"tidak_perlu\"" | "\"terjadwal\"" | "\"segera\""
+array ::= "[" ws (string (ws "," ws string)*)? ws "]"
+string ::= "\"" char* "\""
+char ::= [^"\\\x7F\x00-\x1F] | "\\" (["\\/bfnrt] | "u" [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F])
+boolean ::= "true" | "false"
+ws ::= [ \t\n\r]*

@@ -7,6 +7,7 @@ from src.grammar_loader import GrammarNotFoundError, available_grammars, load_gr
 
 def test_expected_grammars_are_available() -> None:
     assert available_grammars() == [
+        "analisis-log",
         "json",
         "laporan-kepolisian",
         "user-profile",
@@ -15,7 +16,8 @@ def test_expected_grammars_are_available() -> None:
 
 
 @pytest.mark.parametrize(
-    "name", ["json", "laporan-kepolisian", "yes-no.gbnf", "user-profile"]
+    "name",
+    ["analisis-log", "json", "laporan-kepolisian", "yes-no.gbnf", "user-profile"],
 )
 def test_grammar_has_root_rule(name: str) -> None:
     assert "root" in load_grammar(name)
