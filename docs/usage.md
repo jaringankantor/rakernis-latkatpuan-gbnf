@@ -31,6 +31,27 @@ Keluaran mengikuti urutan field yang ditentukan grammar:
 
 Untuk akselerasi GPU, sesuaikan `--n-gpu-layers`. Nilai yang didukung bergantung pada backend saat `llama-cpp-python` dipasang.
 
+### Menggunakan Grok API
+
+Gunakan `--model-token` sebagai pengganti `--model-path` untuk mengirim permintaan
+ke Grok melalui xAI API:
+
+```bash
+cp .env.example .env
+# Edit .env dan isi XAI_API_KEY.
+python -m src.main \
+  --model-token \
+  --grok-model grok-4.5 \
+  --grammar analisis-log \
+  --prompt "Analisis log berikut: ..."
+```
+
+Model bawaan untuk mode API adalah `grok-4.5` dan dapat diganti melalui
+`--grok-model`. Jangan menyimpan token di source code, file konfigurasi yang
+dilacak Git, atau riwayat terminal. Grammar JSON khusus dikirim sebagai JSON
+Schema strict; grammar `json` menggunakan JSON object, sedangkan `yes-no`
+divalidasi setelah respons diterima.
+
 ## 3. Gunakan dari Python
 
 ```python
@@ -94,6 +115,10 @@ Grammar menjamin bentuk keluaran, sedangkan keputusan operasional tetap perlu
 divalidasi oleh petugas yang berwenang.
 
 Sesuaikan nilai `--model-path` dengan lokasi file model GGUF Anda.
+Semua skrip di direktori `examples/` juga dapat dijalankan dengan
+flag `--model-token` sebagai pengganti `--model-path`. Token dibaca dari
+`XAI_API_KEY` di file `.env`. Tambahkan
+`--grok-model NAMA_MODEL` jika ingin menggunakan model selain bawaan.
 
 ## 5. Menambah grammar
 
