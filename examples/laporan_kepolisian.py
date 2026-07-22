@@ -20,11 +20,7 @@ def main() -> None:
     print(
         model.generate(
             (
-                "Saya Rina, nomor telepon 081234567890. Ponsel saya dicuri pada "
-                "20 Juli 2026 sekitar pukul 19.30 di area parkir Pasar Baru, Jakarta. "
-                "Saya tidak melihat pelakunya. Pak Dedi, petugas parkir, melihat seseorang "
-                "membawa ponsel saya. Bukti yang saya miliki adalah rekaman CCTV dan nota "
-                "pembelian ponsel. Situasi saat ini sudah aman."
+                "Saya Andi nomor telepon 081298765432. Saat ini ada seorang pria tidak dikenal yang mencoba mendobrak pintu rumah saya di Jalan Melati Nomor 15, Jakarta Selatan. Kejadian mulai sekitar pukul 02.10 pada 22 Juli 2026. Pria tersebut membawa benda yang menyerupai linggis dan masih berada di depan rumah. Saya bersama istri dan anak sedang mengunci diri di kamar. Tetangga saya, Ibu Sari, juga melihat pelaku dari rumahnya. Rekaman kamera keamanan tersedia. Mohon petugas segera datang karena kami merasa terancam."
             ),
             "laporan-kepolisian",
             system_prompt=(
